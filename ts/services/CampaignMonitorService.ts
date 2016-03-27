@@ -7,7 +7,7 @@ export class CampaignMonitorService implements IService {
     return this._url;
   }
 
-  private _interval = 5;
+  private _interval = 30;
   get checkIntervalInSeconds(): number {
     return this._interval;
   }

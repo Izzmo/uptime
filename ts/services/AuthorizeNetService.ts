@@ -1,4 +1,4 @@
-const request = require('request');
+const scraperjs = require('scraperjs');
 
 export class AuthorizeNetService implements IService {
   public description: string = 'Authorize.NET';
@@ -13,14 +13,22 @@ export class AuthorizeNetService implements IService {
   }
 
   public getStatus(): Promise<IStatus> {
-    return new Promise<IStatus>((success, error) => {
-      request(this._url, (error, response, body) => {
-        let statusObj = {
-          body: body,
-          code: response.statusCode,
-          hasError: error
-        };
-        success(statusObj);
+    return new Promise<IStatus>((promiseSuccess, promiseError) => {
+      let elementFound = false;
+
+      scraperjs.StaticScraper.create(this._url)
+      .scrape($ => {
+        elementFound = $('.page-status.status-none').length === 0;
+      })
+      .onStatusCode(code => {
+        promiseSuccess({
+          body: '',
+          code: code,
+          hasError: elementFound
+        });
+      })
+      .catch(error => {
+        promiseError(error);
       });
     });
   }
