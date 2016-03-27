@@ -1,4 +1,4 @@
-const request = require('request');
+const scraperjs = require('scraperjs');
 
 export class CampaignMonitorService implements IService {
   public description: string = 'Campaign Monitor';
@@ -7,20 +7,28 @@ export class CampaignMonitorService implements IService {
     return this._url;
   }
 
-  private _interval = 30;
+  private _interval = 5;
   get checkIntervalInSeconds(): number {
     return this._interval;
   }
 
   public getStatus(): Promise<IStatus> {
     return new Promise<IStatus>((promiseSuccess, promiseError) => {
-      request(this._url, (error, response, body) => {
-        let statusObj = {
-          body: body,
-          code: response.statusCode,
-          hasError: error
-        };
-        promiseSuccess(statusObj);
+      let elementFound = false;
+
+      scraperjs.StaticScraper.create(this._url)
+      .scrape($ => {
+        elementFound = $('.page-status.status-none').length === 0;
+      })
+      .onStatusCode(code => {
+        promiseSuccess({
+          body: '',
+          code: code,
+          hasError: elementFound
+        });
+      })
+      .catch(error => {
+        promiseError(error);
       });
     });
   }
