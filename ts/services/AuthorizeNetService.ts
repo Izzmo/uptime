@@ -1,6 +1,7 @@
 const request = require('request');
 
 export class AuthorizeNetService implements IService {
+  public description: string = 'Authorize.NET';
   private _url = 'https://status.authorize.net';
   get url(): string {
     return this._url;

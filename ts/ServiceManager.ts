@@ -18,7 +18,7 @@ export class ServiceManager {
       if(service.timer !== null) clearInterval(service.timer);
       service.timer = setInterval(() => {
         service.service.getStatus().then(s => {
-         console.log(s);
+         console.log(service.service.description + ': ' + (s.hasError ? 'Errored out.' : 'Good'));
         });
       }, 1000 * service.service.checkIntervalInSeconds);
     });

@@ -3,11 +3,11 @@ const app = express();
 
 function getHtml_EachResource() {
     let x = '';
-    resources.forEach((r) => {
-        let h = r.resource.getHistory();
-        if(h.length === 0) return;
-        x += `<div class="resource"><span class="status">${h[0].status}</span> ${r.resource.description}</div>`;
-    });
+    // resources.forEach((r) => {
+    //     let h = r.resource.getHistory();
+    //     if(h.length === 0) return;
+    //     x += `<div class="resource"><span class="status">${h[0].status}</span> ${r.resource.description}</div>`;
+    // });
     return x;
 }
 function getHtml() {
