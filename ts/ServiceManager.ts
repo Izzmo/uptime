@@ -15,11 +15,17 @@ export class ServiceManager {
 
   public start(): void {
     this.serviceList.forEach(service => {
-      if(service.timer !== null) clearInterval(service.timer);
-      service.timer = setInterval(() => {
+      if (service.timer !== null) clearInterval(service.timer);
+
+      let callService = () => {
         service.service.getStatus().then(s => {
-         console.log(service.service.description + ': ' + (s.hasError ? 'Errored out.' : 'Good'));
+          console.log(service.service.description + ': ' + (s.hasError ? 'Problematic!' : 'Good =)'));
         });
+      };
+
+      callService();
+      service.timer = setInterval(() => {
+        callService();
       }, 1000 * service.service.checkIntervalInSeconds);
     });
   }

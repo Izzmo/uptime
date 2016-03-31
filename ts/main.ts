@@ -7,5 +7,8 @@ let services = [new CampaignMonitorService.CampaignMonitorService(), new Authori
 let sm = new ServiceManager.ServiceManager(services);
 
 module.exports = function () {
+  console.log('\n=================');
+  console.log('Welcome to Uptime');
+  console.log('=================\n');
   sm.start();
 };
