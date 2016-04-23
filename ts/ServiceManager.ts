@@ -8,12 +8,18 @@ interface IServiceInterval {
 }
 
 export class ServiceManager {
-  private serviceList: Array<IServiceInterval> = [];
+  private serviceList: IServiceInterval[] = [];
+  private updateCallback: Function;
 
   constructor(serviceList: Array<IService>) {
     serviceList.forEach((service) => {
       this.serviceList.push({ service: service, timer: null, history: [] });
     });
+  }
+
+  public setUpdateCallback(fn: Function): void {
+    if(undefined !== fn && null !== fn)
+      this.updateCallback = fn;
   }
 
   public start(): void {
@@ -22,7 +28,7 @@ export class ServiceManager {
 
       let callService = () => {
         service.service.getStatus().then(s => {
-          console.log(service.service.description + ': ' + (s.hasError ? 'Problematic!' : 'Good =)'));
+          this.updateCallback(service.service, s);
         });
       };
 

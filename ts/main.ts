@@ -8,6 +8,9 @@ import { CoachsAssistantService } from './services/CoachsAssistantService';
 import { TeamStoreService } from './services/TeamStoreService';
 import { TeamStoreWebService } from './services/TSWService';
 
+import { IStatus } from './IStatus';
+import { IService } from './IService';
+
 let services = [
   new CampaignMonitorService(),
   new AuthorizeNetService(),
@@ -20,6 +23,12 @@ let services = [
 ];
 
 let sm = new ServiceManager(services);
+sm.setUpdateCallback((service: IService, status: IStatus) => {
+  if (status.hasError) {
+    let date = new Date();
+    console.log(`[${date.getDay() + 1}/${date.getMonth() + 1}/${date.getFullYear()}] ${service.description}: Code ${status.code}`);
+  }
+});
 
 export default function () {
   console.log('\n=================');
