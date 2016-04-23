@@ -2,7 +2,7 @@
 
 const main = require('./app/main');
 
-main();
+main.default();
 
 // let resources = [];
 // resources.push({ resource: new Resource('API', 'https://api.gtmsportswear.com', 30), interval: null });

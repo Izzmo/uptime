@@ -1,29 +1,29 @@
-import ServiceManager = require('./ServiceManager');
-import CampaignMonitorService = require('./services/CampaignMonitorService');
-import AuthorizeNetService = require('./services/AuthorizeNetService');
-import GtmSportswearService = require('./services/GtmSportswearService');
-import GtmSportswearHttpsService = require('./services/GtmSportswearHttpsService');
-import GtmApiService = require('./services/GtmApiService');
-import CoachsAssistantService = require('./services/CoachsAssistantService');
-import TeamStoreService = require('./services/TeamStoreService');
-import TSWService = require('./services/TSWService');
+import { ServiceManager } from './ServiceManager';
+import { CampaignMonitorService } from './services/CampaignMonitorService';
+import { AuthorizeNetService } from './services/AuthorizeNetService';
+import { GtmSportswearService } from './services/GtmSportswearService';
+import { GtmSportswearHttpsService } from './services/GtmSportswearHttpsService';
+import { GtmApiService } from './services/GtmApiService';
+import { CoachsAssistantService } from './services/CoachsAssistantService';
+import { TeamStoreService } from './services/TeamStoreService';
+import { TeamStoreWebService } from './services/TSWService';
 
 let services = [
-  new CampaignMonitorService.CampaignMonitorService(),
-  new AuthorizeNetService.AuthorizeNetService(),
-  new GtmSportswearService.GtmSportswearService(),
-  new GtmSportswearHttpsService.GtmSportswearHttpsService(),
-  new GtmApiService.GtmApiService(),
-  new CoachsAssistantService.CoachsAssistantService(),
-  new TeamStoreService.TeamStoreService(),
-  new TSWService.TeamStoreWebService()
+  new CampaignMonitorService(),
+  new AuthorizeNetService(),
+  new GtmSportswearService(),
+  new GtmSportswearHttpsService(),
+  new GtmApiService(),
+  new CoachsAssistantService(),
+  new TeamStoreService(),
+  new TeamStoreWebService()
 ];
 
-let sm = new ServiceManager.ServiceManager(services);
+let sm = new ServiceManager(services);
 
-module.exports = function () {
+export default function () {
   console.log('\n=================');
   console.log('Welcome to Uptime');
   console.log('=================\n');
   sm.start();
-};
+}

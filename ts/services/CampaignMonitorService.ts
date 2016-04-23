@@ -1,3 +1,6 @@
+import { IService } from '../IService';
+import { IStatus } from '../IStatus';
+
 const scraperjs = require('scraperjs');
 
 export class CampaignMonitorService implements IService {

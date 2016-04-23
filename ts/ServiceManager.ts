@@ -1,3 +1,6 @@
+import { IService } from './IService';
+import { IStatus } from './IStatus';
+
 interface IServiceInterval {
   service: IService;
   timer: NodeJS.Timer;

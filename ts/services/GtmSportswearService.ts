@@ -1,7 +1,10 @@
+import { IService } from '../IService';
+import { IStatus } from '../IStatus';
+
 const scraperjs = require('scraperjs');
 
 export class GtmSportswearService implements IService {
-  public description: string = 'GTM Sportswear Homepage';
+  public description = 'GTM Sportswear Homepage';
   public checkInterval = 60 * 5;
   public errorCheckInterval = 15;
 
