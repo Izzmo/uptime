@@ -26,7 +26,7 @@ let sm = new ServiceManager(services);
 sm.setUpdateCallback((service: IService, status: IStatus) => {
   if (status.hasError) {
     let date = new Date();
-    console.log(`[${date.getDay() + 1}/${date.getMonth() + 1}/${date.getFullYear()}] ${service.description}: Code ${status.code}`);
+    console.log(`[${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}] ${service.description}: Code ${status.code}`);
   }
 });
 
