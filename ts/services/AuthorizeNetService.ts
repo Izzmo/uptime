@@ -5,8 +5,8 @@ const scraperjs = require('scraperjs');
 
 export class AuthorizeNetService implements IService {
   public description: string = 'Authorize.NET';
-  public checkInterval = 10;
-  public errorCheckInterval = 5;
+  public checkInterval = 60 * 5;
+  public errorCheckInterval = 15;
 
   private _url = 'https://status.authorize.net';
   get url(): string {
@@ -23,7 +23,7 @@ export class AuthorizeNetService implements IService {
 
       scraperjs.StaticScraper.create(this._url)
       .scrape($ => {
-        elementFound = $('body.status-none, body.status-minor').length === 1;
+        elementFound = $('body.status-none, body.status-minor').length === 0;
       })
       .onStatusCode(code => {
         promiseSuccess({
