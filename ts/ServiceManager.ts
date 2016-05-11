@@ -31,32 +31,14 @@ export class ServiceManager {
 
       const callService = () => {
         service.service.getStatus().then(s => {
-          if (s.hasError) {
-            if (!service.inErrorMode) {
-              console.log('toggle');
-              service.inErrorMode = true;
-
-              clearInterval(service.timer);
-              service.timer = setInterval(() => {
-                callService();
-              }, 1000 * service.service.errorCheckInterval);
-            }
-          }
-          else if (service.inErrorMode) {
-            service.inErrorMode = false;
-
-            clearInterval(service.timer);
-            service.timer = setInterval(() => {
-              callService();
-            }, 1000 * service.service.checkIntervalInSeconds);
-          }
-
+          this.handleServiceStatusResponse(service, s, callService);
           this.updateCallback(service.service, s);
         });
       };
 
       callService();
     });
+    console.log(' ');
   }
 
   public stop(): void {
@@ -64,5 +46,26 @@ export class ServiceManager {
       clearInterval(service.timer);
       service.timer = null;
     });
+  }
+
+  private handleServiceStatusResponse(serviceInterval: ServiceInterval, s: IStatus, serviceCaller: Function): void {
+    if (s.hasError) {
+      if (!serviceInterval.inErrorMode) {
+        serviceInterval.inErrorMode = true;
+
+        clearInterval(serviceInterval.timer);
+        serviceInterval.timer = setInterval(() => {
+          serviceCaller();
+        }, 1000 * serviceInterval.service.errorCheckInterval);
+      }
+    }
+    else if (serviceInterval.inErrorMode || null === serviceInterval.timer) {
+      serviceInterval.inErrorMode = false;
+
+      clearInterval(serviceInterval.timer);
+      serviceInterval.timer = setInterval(() => {
+        serviceCaller();
+      }, 1000 * serviceInterval.service.checkIntervalInSeconds);
+    }
   }
 }
